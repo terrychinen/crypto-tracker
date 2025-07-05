@@ -1,0 +1,37 @@
+.container {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+table {
+  width: 100%;
+}
+
+.coin-cell {
+  display: flex;
+  align-items: center;
+}
+
+.coin-image {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.75rem;
+}
+
+.positive {
+  color: #16c784;
+}
+
+.negative {
+  color: #ea3943;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  gap: 1rem;
+}

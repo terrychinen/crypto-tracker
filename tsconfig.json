@@ -19,6 +19,7 @@
       "@app/*": ["src/app/*"],
       "@features/*": ["src/app/features/*"],
       "@crypto/*": ["src/app/features/crypto/*"],
+      "@dashboard/*": ["src/app/features/dashboard/*"],
     }
   },
   "angularCompilerOptions": {
