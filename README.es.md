@@ -1,3 +1,5 @@
+[Read in english](README.md)
+
 # CryptoTracker - Cryptocurrency Dashboard
 Una aplicación web desarrollada con Angular para visualizar los datos del mercado de criptodivisas.
 
