@@ -43,7 +43,6 @@ export class CryptoService {
     });
   }
 
-
   /**
    * Gets the historical data of a currency for the chart.
    * @param coinId The ID of the currency (e.g., ‘bitcoin’).
