@@ -20,6 +20,9 @@ import { MatInputModule } from '@angular/material/input';
 // Intefraces
 import { TableColumn } from './interfaces';
 
+// Components
+import { TableFilterComponent } from './components/table-filter/table-filter.component';
+
 // Directives
 import { TableCellTemplateDirective } from './directives/table-cell-template.directive';
 
@@ -33,10 +36,13 @@ import { TableCellTemplateDirective } from './directives/table-cell-template.dir
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+
+    TableFilterComponent
   ],
 })
 export class DatatableComponent<T> implements AfterContentInit {
+  showFilter = input(true);
   data = input<T[]>([]);
   columns = input<TableColumn[]>([]);
 
@@ -74,8 +80,7 @@ export class DatatableComponent<T> implements AfterContentInit {
     this.displayedColumns = this.columns().map(c => c.def);
   }
 
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {

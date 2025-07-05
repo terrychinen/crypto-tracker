@@ -1,5 +1,5 @@
 // Angular framework imports
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { CurrencyPipe, PercentPipe, UpperCasePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -27,9 +27,7 @@ import { TableCellTemplateDirective } from '@app/shared/components/datatable/dir
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  imports : [
-    DatatableComponent,
-
+  imports: [
     CurrencyPipe,
     PercentPipe,
     UpperCasePipe,
@@ -41,6 +39,7 @@ import { TableCellTemplateDirective } from '@app/shared/components/datatable/dir
     MatPaginatorModule,
     MatProgressSpinnerModule,
 
+    DatatableComponent,
     TableCellTemplateDirective,
   ],
 })

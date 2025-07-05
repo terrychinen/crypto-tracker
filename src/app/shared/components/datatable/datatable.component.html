@@ -1,11 +1,9 @@
 <div class="container">
-  <mat-form-field appearance="outline" class="filter-field">
-    <mat-label>Search</mat-label>
-    <input matInput (keyup)="applyFilter($event)" #input />
-  </mat-form-field>
+  @if (showFilter()) {
+    <app-table-filter (filterChange)="applyFilter($event)"></app-table-filter>
+  }
 
   <table mat-table [dataSource]="dataSource" matSort>
-
     @for (column of columns(); track column.def) {
       <ng-container [matColumnDef]="column.def">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column.header }} </th>
