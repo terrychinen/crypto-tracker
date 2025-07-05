@@ -1,0 +1,22 @@
+@use 'variables' as v;
+
+.container {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+}
+
+.filter-field {
+  width: 50%;
+  margin: 1rem 0rem;
+}
+
+.clickable-row {
+  cursor: pointer;
+
+  &:hover {
+    background-color: v.$hover-background-color;
+  }
+}

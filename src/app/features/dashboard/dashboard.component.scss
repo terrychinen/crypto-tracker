@@ -1,13 +1,9 @@
 @use 'variables' as v;
 
 .container {
-  max-width: 75rem;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-}
-
-table {
-  width: 100%;
 }
 
 .coin-cell {
@@ -18,7 +14,7 @@ table {
 .coin-image {
   width: 1.5rem;
   height: 1.5rem;
-  margin-right: 0.75rem;
+  margin-right: 1.5rem;
 }
 
 .positive {
@@ -27,14 +23,6 @@ table {
 
 .negative {
   color: v.$negative-color;
-}
-
-.clickable-row {
-  cursor: pointer;
-
-  &:hover {
-    background-color: v.$hover-background-color;
-  }
 }
 
 .loading-spinner {

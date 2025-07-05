@@ -1,31 +1,38 @@
 // Angular framework imports
-import { Component, effect, inject, ViewChild } from '@angular/core';
-import { CurrencyPipe, NgClass, PercentPipe, UpperCasePipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { CurrencyPipe, PercentPipe, UpperCasePipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 // Angular Material
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 
 // Services
 import { CryptoService } from '@crypto/services/crypto.service';
+
+// Interfaces
+import { Coin } from '@crypto/interfaces';
+
+// Shared
+import { DatatableComponent } from '@shared/components/datatable/datatable.component';
+import { TableColumn } from '@shared/components/datatable/interfaces/table-column';
+import { TableCellTemplateDirective } from '@app/shared/components/datatable/directives/table-cell-template.directive';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
   imports : [
+    DatatableComponent,
+
     CurrencyPipe,
     PercentPipe,
     UpperCasePipe,
-    NgClass,
-
-    RouterLink,
 
     MatInputModule,
     MatFormFieldModule,
@@ -33,48 +40,24 @@ import { CryptoService } from '@crypto/services/crypto.service';
     MatTableModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+
+    TableCellTemplateDirective,
   ],
 })
 export class DashboardComponent {
+  private _router = inject(Router);
   private _cryptoService = inject(CryptoService);
 
-  @ViewChild(MatPaginator)
-  set paginator(paginator: MatPaginator) {
-    if (paginator) {
-      this.dataSource.paginator = paginator;
-    }
-  }
+  coins = toSignal(this._cryptoService.getTop100Coins(), { initialValue: [] });
 
-  @ViewChild(MatSort) set sort(sort: MatSort) {
-    if (sort) {
-      this.dataSource.sort = sort;
-    }
-  }
-
-  displayedColumns: string[] = [
-    'name',
-    'current_price',
-    'price_change_percentage_24h',
-    'total_volume',
+  tableColumns: TableColumn[] = [
+    { def: 'name', header: 'Coin', cellType: 'image-text' },
+    { def: 'current_price', header: 'Current price', cellType: 'currency' },
+    { def: 'price_change_percentage_24h', header: 'Change 24h', cellType: 'percent' },
+    { def: 'total_volume', header: 'Total volume 24h', cellType: 'currency' },
   ];
 
-  
-  coins = toSignal(this._cryptoService.getTop100Coins(), { initialValue: [] });
-  
-  dataSource = new MatTableDataSource(this.coins());
-
-  constructor() {
-    effect(() => {
-      this.dataSource.data = this.coins();
-    });
-  }
-
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  handleRowClick(row: Coin): void {
+    this._router.navigate(['/coin', row.id]);
   }
 }

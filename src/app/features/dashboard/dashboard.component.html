@@ -1,59 +1,33 @@
 <div class="container">
   <h1>CryptoTracker Dashboard</h1>
 
-  <mat-form-field appearance="outline">
-    <mat-label>Search</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Bitcoin" #input />
-  </mat-form-field>
+  <app-datatable 
+    [data]="coins()" 
+    [columns]="tableColumns"
+    (rowClicked)="handleRowClick($event)">
 
-  @if (coins() && coins()!.length) {
-    <div class="table-container mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource" matSort>
-        <!-- Name -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Coin</th>
-          <td mat-cell *matCellDef="let coin">
-            <div class="coin-cell">
-              <img [src]="coin.image" alt="{{ coin.name }}" class="coin-image" />
-              <span>{{ coin.name }} ({{ coin.symbol | uppercase }})</span>
-            </div>
-          </td>
-        </ng-container>
-  
-        <!-- Current price -->
-        <ng-container matColumnDef="current_price">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Current price</th>
-          <td mat-cell *matCellDef="let coin">{{ coin.current_price | currency:'USD' }}</td>
-        </ng-container>
-  
-        <!-- Price change percentage 24h -->
-        <ng-container matColumnDef="price_change_percentage_24h">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Change 24h</th>
-          <td mat-cell *matCellDef="let coin" [ngClass]="coin.price_change_percentage_24h > 0 ? 'positive' : 'negative'">
-            {{ coin.price_change_percentage_24h / 100 | percent:'1.2-2' }}
-          </td>
-        </ng-container>
-  
-        <!-- Total volume -->
-        <ng-container matColumnDef="total_volume">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Total volume 24h</th>
-          <td mat-cell *matCellDef="let coin">{{ coin.total_volume | currency:'USD':'symbol':'1.0-0' }}</td>
-        </ng-container>
-  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['/coin', row.id]" class="clickable-row"></tr>
+    <ng-template appTableCellTemplate="name" let-coin>
+      <div class="coin-cell">
+        <img [src]="coin.image" alt="{{ coin.name }}" class="coin-image" />
+        <span>{{ coin.name }} ({{ coin.symbol | uppercase }})</span>
+      </div>
+    </ng-template>
 
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No data found"{{input.value}}"</td>
-        </tr>
-      </table>
-  
-      <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Seleccionar página de monedas"></mat-paginator>
-    </div>
-  } @else {
-    <div class="loading-spinner">
-      <mat-spinner></mat-spinner>
-      <p>Loading...</p>
-    </div>
-  }
+    <ng-template appTableCellTemplate="current_price" let-coin>
+      {{ coin.current_price | currency:'USD' }}
+    </ng-template>
+
+    <ng-template appTableCellTemplate="price_change_percentage_24h" let-coin>
+      <span
+        [class.positive]="coin.price_change_percentage_24h > 0"
+        [class.negative]="coin.price_change_percentage_24h < 0">
+        {{ coin.price_change_percentage_24h / 100 | percent:'1.2-2' }}
+      </span>
+    </ng-template>
+
+    <ng-template appTableCellTemplate="total_volume" let-coin>
+      {{ coin.total_volume | currency:'USD':'symbol':'1.0-0' }}
+    </ng-template>
+
+  </app-datatable>
 </div>

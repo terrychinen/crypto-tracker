@@ -1,9 +1,9 @@
 <div class="container">
   @if (chartData(); as data) {
     <div class="header">
-      <h1>Historial de Precios de: {{ coinId() | titlecase }}</h1>
+      <h1>Price History of: {{ coinId() | titlecase }}</h1>
       <a mat-raised-button color="primary" routerLink="/dashboard">
-        &larr; Volver al Dashboard
+        &larr;  Back to Dashboard
       </a>
     </div>
 
@@ -19,7 +19,7 @@
   } @else {
     <div class="loading-spinner">
       <mat-spinner></mat-spinner>
-      <p>Cargando gráfico...</p>
+      <p>Loading...</p>
     </div>
   }
 </div>
