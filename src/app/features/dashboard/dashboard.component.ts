@@ -48,7 +48,7 @@ export class DashboardComponent {
   private _router = inject(Router);
   private _cryptoService = inject(CryptoService);
 
-  coins = toSignal(this._cryptoService.getTop100Coins(), { initialValue: [] });
+  coins = toSignal(this._cryptoService.getMarketData(), { initialValue: [] });
 
   tableColumns: TableColumn[] = [
     { def: 'name', header: 'Coin', cellType: 'image-text' },

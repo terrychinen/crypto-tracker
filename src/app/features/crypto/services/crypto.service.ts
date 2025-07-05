@@ -23,7 +23,12 @@ export class CryptoService {
   private _http = inject(HttpClient);
   private _apiUrl = `${environment.apiUrl}/coins`;
 
-  getTop100Coins(
+  /**
+   * Gets market data for a list of cryptocurrencies.
+   * @param params An optional object with parameters for the API query (e.g., vs_currency, per_page).
+   * @returns An Observable with an array of Coin objects.
+   */
+  getMarketData(
     params: MarketParams = {}
   ): Observable<Coin[]> {
     const url = `${this._apiUrl}/markets`;
