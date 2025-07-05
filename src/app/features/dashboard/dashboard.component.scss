@@ -1,3 +1,5 @@
+@use 'variables' as v;
+
 .container {
   max-width: 75rem;
   margin: 0 auto;
@@ -20,11 +22,19 @@ table {
 }
 
 .positive {
-  color: #16c784;
+  color: v.$positive-color;
 }
 
 .negative {
-  color: #ea3943;
+  color: v.$negative-color;
+}
+
+.clickable-row {
+  cursor: pointer;
+
+  &:hover {
+    background-color: v.$hover-background-color;
+  }
 }
 
 .loading-spinner {

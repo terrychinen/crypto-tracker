@@ -1,0 +1,25 @@
+<div class="container">
+  @if (chartData(); as data) {
+    <div class="header">
+      <h1>Historial de Precios de: {{ coinId() | titlecase }}</h1>
+      <a mat-raised-button color="primary" routerLink="/dashboard">
+        &larr; Volver al Dashboard
+      </a>
+    </div>
+
+    <div class="chart-container">
+      <canvas
+        baseChart
+        [data]="chartData()"
+        [options]="lineChartOptions"
+        type="line"
+      >
+      </canvas>
+    </div>
+  } @else {
+    <div class="loading-spinner">
+      <mat-spinner></mat-spinner>
+      <p>Cargando gráfico...</p>
+    </div>
+  }
+</div>

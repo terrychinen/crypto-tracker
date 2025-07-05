@@ -17,6 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@app/*": ["src/app/*"],
+      "@environments/*": ["src/environments/*"],
       "@features/*": ["src/app/features/*"],
       "@crypto/*": ["src/app/features/crypto/*"],
       "@dashboard/*": ["src/app/features/dashboard/*"],

@@ -1,12 +1,18 @@
+// Angular framework imports
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
+// Third-party libraries
+import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
-  templateUrl: './app.html',
+  template: '<router-outlet></router-outlet>',
   styleUrl: './app.scss'
 })
 export class App {
-  protected title = "crypto-tracker";
+  constructor() {
+    Chart.register(...registerables);
+  }
 }

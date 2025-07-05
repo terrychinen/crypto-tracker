@@ -6,10 +6,15 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 // Interfaces
-import { Coin, MarketParams } from '@app/features/crypto/interfaces';
+import {
+  ChartData,
+  ChartParams,
+  Coin,
+  MarketParams,
+} from '@crypto/interfaces';
 
 // Environments
-import { environment } from 'src/environments/environment';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +23,11 @@ export class CryptoService {
   private _http = inject(HttpClient);
   private _apiUrl = `${environment.apiUrl}/coins`;
 
-  getTop100Coins(params: MarketParams = {}): Observable<Coin[]> {
+  getTop100Coins(
+    params: MarketParams = {}
+  ): Observable<Coin[]> {
     const url = `${this._apiUrl}/markets`;
+
     const defaultParams: MarketParams = {
       vs_currency: 'usd',
       order: 'market_cap_desc',
@@ -33,5 +41,24 @@ export class CryptoService {
     return this._http.get<Coin[]>(url, {
       params: new HttpParams({ fromObject: requestParams })
     });
+  }
+
+
+  /**
+   * Gets the historical data of a currency for the chart.
+   * @param coinId The ID of the currency (e.g., ‘bitcoin’).
+   * @param options An object with options for the query (currency and days).
+   * @returns An Observable with the chart data.
+   */
+  getCoinChartData(
+    coinId: string,
+    options: ChartParams = {}
+  ): Observable<ChartData> {
+    const { vs_currency = 'usd', days = 30 } = options;
+
+    const url = `${this._apiUrl}/${coinId}/market_chart`;
+    const params = { vs_currency, days: days.toString() };
+
+    return this._http.get<ChartData>(url, { params });
   }
 }
